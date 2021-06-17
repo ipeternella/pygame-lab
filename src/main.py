@@ -1,16 +1,15 @@
 import os
 import sys
-from re import T
-from typing import List
-
-from pygame import Rect
-from pygame import time
 
 # flake8: noqa E402 (top-level import)
 main_path = os.path.dirname(__file__)
 sys.path.append(os.path.join(main_path, ".."))
 
+from typing import List
+
 import pygame
+from pygame import Rect
+from pygame import time
 from pygame.surface import Surface
 from pygame.time import Clock
 
