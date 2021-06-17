@@ -1,2 +1,3 @@
 # pygame-lab-01
-🧪 A lab for playing around with Pygame  🧪
+
+🧪 A lab for playing around with Pygame 🧪
