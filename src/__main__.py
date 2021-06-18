@@ -1,10 +1,3 @@
-import os
-import sys
-
-# flake8: noqa E402 (top-level import)
-main_path = os.path.dirname(__file__)
-sys.path.append(os.path.join(main_path, ".."))
-
 import pygame
 from pygame.surface import Surface
 from pygame.time import Clock
