@@ -5,39 +5,19 @@ import sys
 main_path = os.path.dirname(__file__)
 sys.path.append(os.path.join(main_path, ".."))
 
-from typing import List
-
 import pygame
-from pygame import Rect
-from pygame import time
 from pygame.surface import Surface
 from pygame.time import Clock
 
+from src.collisions import move
 from src.inputs import capture_player_inputs
+from src.maps import LEVEL_MAP_01
+from src.maps import render_level_map
 from src.player import Player
 from src.settings import GAME_FPS
 from src.settings import WINDOW_SIZE
 from src.settings import WINDOW_TITLE
 from src.utils import load_image_asset
-
-TILE_SIZE = load_image_asset("img/grass.png").get_width()
-
-# map
-game_map = [
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["2", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2", "2"],
-    ["1", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "1"],
-    ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"],
-    ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"],
-    ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"],
-    ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"],
-    ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"],
-]
 
 
 def main():
@@ -60,28 +40,9 @@ def main():
 
     # main game loop
     while True:
-        raw_display.fill((146, 244, 255))
-        raw_display.blit(player_img, (player.rect.x, player.rect.y))
+        raw_display.fill((146, 244, 255))  # clears the display
 
-        # map processing
-        tile_rects: List[Rect] = []
-
-        y = 0
-        for row in game_map:
-            x = 0
-            for tile in row:
-                if tile == "1":
-                    raw_display.blit(dirt_img, (x * TILE_SIZE, y * TILE_SIZE))
-
-                if tile == "2":
-                    raw_display.blit(grass_img, (x * TILE_SIZE, y * TILE_SIZE))
-
-                if tile != "0":  # for collisions (anything != air)
-                    tile_rects.append(pygame.Rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE))
-
-                x += 1
-
-            y += 1
+        tile_rects = render_level_map(raw_display, [grass_img, dirt_img], LEVEL_MAP_01)
 
         # input capturing
         captured_inputs = capture_player_inputs()
@@ -92,8 +53,10 @@ def main():
             sys.exit(0)
 
         player.update(captured_inputs)
+        move(player.rect, player.speed, tile_rects)
 
         # scale display is what is blit on the game screen
+        raw_display.blit(player_img, (player.rect.x, player.rect.y))
         scaled_display = pygame.transform.scale(raw_display, WINDOW_SIZE)
         game_screen.blit(scaled_display, (0, 0))
 

@@ -11,3 +11,5 @@ ASSETS_DIR: Path = os.path.join(ROOT_DIR, "assets/")  # type: ignore
 WINDOW_TITLE = "A Pygame window!"
 WINDOW_SIZE: Tuple[int, int] = (600, 400)
 GAME_FPS = 60
+
+TILE_SIZE = 16
