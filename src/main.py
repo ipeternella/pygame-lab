@@ -10,6 +10,7 @@ from pygame.surface import Surface
 from pygame.time import Clock
 
 from src.collisions import move
+from src.exit import game_over
 from src.inputs import capture_player_inputs
 from src.maps import LEVEL_MAP_01
 from src.maps import render_level_map
@@ -35,24 +36,23 @@ def main():
     grass_img = load_image_asset("img/grass.png")
     dirt_img = load_image_asset("img/dirt.png")
     player_img = load_image_asset("img/hero.png")
-    # player_img.set_colorkey((255, 255, 255))  # color key sets the pixel color to be transparent
+
+    # player
     player = Player(50, 50, player_img)
 
     # main game loop
     while True:
         raw_display.fill((146, 244, 255))  # clears the display
-
         tile_rects = render_level_map(raw_display, [grass_img, dirt_img], LEVEL_MAP_01)
 
         # input capturing
-        captured_inputs = capture_player_inputs()
+        captured_input = capture_player_inputs()
 
-        # input handling by entities
-        if captured_inputs.should_quit:
-            pygame.quit()
-            sys.exit(0)
+        # input handling by entities (updating)
+        game_over(captured_input)
+        player.update(captured_input)
 
-        player.update(captured_inputs)
+        # moving and collisions
         move(player.rect, player.speed, tile_rects)
 
         # scale display is what is blit on the game screen

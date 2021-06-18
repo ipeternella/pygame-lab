@@ -8,6 +8,8 @@ from pygame import Rect
 from pygame import Surface
 
 from src.inputs import CapturedInput
+from src.settings import GRAVITY
+from src.settings import JUMP_VELOCITY_Y
 
 
 class Player:
@@ -17,7 +19,6 @@ class Player:
     _moving_right: bool
     _moving_left: bool
     _speed: List[int]
-    _gravity: int
 
     def __init__(self, x: float, y: float, image: Surface) -> None:
         self._rect = Rect(x, y, image.get_width(), image.get_height())
@@ -25,7 +26,6 @@ class Player:
         self._image = image
         self._moving_left = False
         self._moving_right = False
-        self._gravity = 2
 
     @property
     def rect(self) -> Rect:
@@ -46,9 +46,13 @@ class Player:
         if captured_inputs.moving_left or captured_inputs.moving_left_stop:
             self._moving_left = not captured_inputs.moving_left_stop
 
-        # speed resetting: allows the player to immediately stop once the key is released
+        # speed_x resetting: allows the player to immediately stop once the key is released
         # if not reset: gives the 'sliding on ice' sensation
-        self._speed = [0, 0]
+        # speed_y is not reset: gravity is always ON
+        self._speed[0] = 0
+
+        if captured_inputs.has_jumped:
+            self._speed[1] -= JUMP_VELOCITY_Y  # negative y
 
         # x axis
         if self._moving_right:
@@ -58,7 +62,7 @@ class Player:
             self._speed[0] -= 2
 
         # y axis: always updated as gravity always drags down
-        self._speed[1] += self._gravity
+        self._speed[1] += GRAVITY
 
         if self._speed[1] > 3:  # clamping
             self._speed[1] = 3

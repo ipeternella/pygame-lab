@@ -6,6 +6,7 @@ from dataclasses import dataclass
 import pygame
 from pygame.constants import K_LEFT
 from pygame.constants import K_RIGHT
+from pygame.constants import K_SPACE
 from pygame.constants import KEYDOWN
 from pygame.constants import KEYUP
 from pygame.constants import QUIT
@@ -21,6 +22,8 @@ class CapturedInput:
 
     moving_right: bool = False
     moving_right_stop: bool = False
+
+    has_jumped: bool = False
 
 
 def capture_player_inputs() -> CapturedInput:
@@ -39,6 +42,8 @@ def capture_player_inputs() -> CapturedInput:
                 captured_input.moving_right = True
             if event.key == K_LEFT:
                 captured_input.moving_left = True
+            if event.key == K_SPACE:
+                captured_input.has_jumped = True
 
         if event.type == KEYUP:
             if event.key == K_RIGHT:
