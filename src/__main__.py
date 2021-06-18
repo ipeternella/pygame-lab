@@ -5,7 +5,7 @@ from pygame.time import Clock
 from src.collisions import move
 from src.exit import exit_if_captured_quit
 from src.inputs import capture_player_inputs
-from src.maps import LEVEL_MAP_01
+from src.maps import load_level_map
 from src.maps import render_level_map
 from src.player import Player
 from src.settings import GAME_FPS
@@ -32,11 +32,12 @@ def main():
 
     # player
     player = Player(50, 50, player_img)
+    level_01 = load_level_map("level-01")
 
     # main game loop
     while True:
         raw_display.fill((146, 244, 255))  # clears the display
-        tile_rects = render_level_map(raw_display, [grass_img, dirt_img], LEVEL_MAP_01)
+        tile_rects = render_level_map(raw_display, [grass_img, dirt_img], level_01)
 
         # input capturing
         captured_input = capture_player_inputs()

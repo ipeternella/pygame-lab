@@ -2,29 +2,32 @@
 Module with some maps of the levels.
 """
 
+import os
 from typing import List
 
 import pygame
 from pygame import Rect
 from pygame.surface import Surface
 
+from src.settings import ROOT_DIR
 from src.settings import TILE_SIZE
 
-LEVEL_MAP_01 = [
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "2", "2", "2", "2", "2", "0", "0", "0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-    ["2", "2", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "2", "2"],
-    ["1", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "1"],
-    ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"],
-    ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"],
-    ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"],
-    ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"],
-    ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"],
-]
+
+def load_level_map(map_name: str, map_assets_folder: str = "assets/maps") -> List[List[str]]:
+    """
+    Reads a map level file and transforms it into a matrix of tile strings.
+    """
+    tile_map: List[List[str]] = []
+    level_map_path = os.path.join(ROOT_DIR, f"{map_assets_folder}/{map_name}")
+
+    with open(level_map_path) as map_file:
+        all_map_data = map_file.read()
+        map_rows = all_map_data.split("\n")
+
+        for row in map_rows:
+            tile_map.append([tile for tile in row])
+
+    return tile_map
 
 
 def render_level_map(display: Surface, level_images: List[Surface], level_map: List[List[str]]) -> List[Rect]:
