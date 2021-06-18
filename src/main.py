@@ -10,7 +10,7 @@ from pygame.surface import Surface
 from pygame.time import Clock
 
 from src.collisions import move
-from src.exit import game_over
+from src.exit import exit_if_captured_quit
 from src.inputs import capture_player_inputs
 from src.maps import LEVEL_MAP_01
 from src.maps import render_level_map
@@ -49,7 +49,7 @@ def main():
         captured_input = capture_player_inputs()
 
         # input handling by entities (updating)
-        game_over(captured_input)
+        exit_if_captured_quit(captured_input)
         player.update(captured_input)
 
         # moving and collisions
