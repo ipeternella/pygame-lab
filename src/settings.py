@@ -18,5 +18,5 @@ TILE_SIZE = 16
 GRAVITY = 1
 JUMP_VELOCITY_Y = 15
 
-# scrolling (gives 'parallax' scrolling effect) -> set 1 for simple scrolling
+# scrolling (gives smooth scrolling effect) -> set 1 for simple scrolling
 SCROLLING_OFFSET_FRACTION = 0.05

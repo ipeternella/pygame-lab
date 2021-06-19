@@ -1,3 +1,7 @@
+"""
+Module with the main game loop.
+"""
+
 import pygame
 from pygame.surface import Surface
 from pygame.time import Clock
@@ -37,13 +41,13 @@ def main():
 
     # player
     player = Player(50, 50, player_img)
-    scroll = Scroll(0, 0)
+    scroll = Scroll(0.0, 0.0)
 
     # main game loop
     while True:
         raw_display.fill((146, 244, 255))  # clears the display
         scroll.update(player.rect.x, player.rect.y)  # update scrolling according to last player's updated position
-        tile_rects = render_level_map(raw_display, [grass_img, dirt_img], level_01, player, scroll)
+        tile_rects = render_level_map(raw_display, [dirt_img, grass_img], level_01, player, scroll)
 
         # input capturing
         captured_input = capture_player_inputs()

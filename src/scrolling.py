@@ -12,20 +12,28 @@ class Scroll:
     gives the 'screen scrolling' sensation.
     """
 
-    _offset_x: int
-    _offset_y: int
+    _offset_x: float
+    _offset_y: float
 
-    def __init__(self, offset_x: int, offset_y: int) -> None:
+    def __init__(self, offset_x: float, offset_y: float) -> None:
         self._offset_x = offset_x
         self._offset_y = offset_y
 
     @property
     def offset_x(self) -> int:
-        return self._offset_x
+        """
+        The offsets returned must be cast to integers as rect.x/rect.y are integers. If floats are returned,
+        then the image rendering will contain failures/overlaps.
+        """
+        return int(self._offset_x)
 
     @property
     def offset_y(self) -> int:
-        return self._offset_y
+        """
+        The offsets returned must be cast to integers as rect.x/rect.y are integers. If floats are returned,
+        then the image rendering will contain failures/overlaps.
+        """
+        return int(self._offset_y)
 
     def update(self, player_x: int, player_y: int) -> None:
         """
