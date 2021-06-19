@@ -17,6 +17,7 @@ from src.settings import GAME_FPS
 from src.settings import RAW_DISPLAY_SIZE
 from src.settings import WINDOW_SIZE
 from src.settings import WINDOW_TITLE
+from src.spritesheets import SpriteSheet
 from src.utils import load_image_asset
 
 
@@ -42,6 +43,9 @@ def main():
     # player
     player = Player(50, 50, player_img)
     scroll = Scroll(0.0, 0.0)
+
+    spritesheet = SpriteSheet("hero-run")
+    images = spritesheet.get_all()
 
     # main game loop
     while True:
