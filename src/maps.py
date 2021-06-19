@@ -52,7 +52,7 @@ def render_level_map(
                 display.blit(level_images[1], (x * TILE_SIZE - scroll.offset_x, y * TILE_SIZE - scroll.offset_y))
 
             # for collisions (anything != air) -> we use rects (blitting: images, collision: rects)
-            if tile != "-":
+            if tile != ".":
                 tile_rects.append(pygame.Rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE))
 
             x += 1
