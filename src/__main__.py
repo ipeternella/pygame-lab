@@ -6,6 +6,7 @@ import pygame
 from pygame.surface import Surface
 from pygame.time import Clock
 
+from src.animations import SpriteSheetParser
 from src.collisions import move
 from src.exit import exit_if_captured_quit
 from src.inputs import capture_player_inputs
@@ -17,7 +18,6 @@ from src.settings import GAME_FPS
 from src.settings import RAW_DISPLAY_SIZE
 from src.settings import WINDOW_SIZE
 from src.settings import WINDOW_TITLE
-from src.spritesheets import SpriteSheet
 from src.utils import load_image_asset
 
 
@@ -44,8 +44,10 @@ def main():
     player = Player(50, 50, player_img)
     scroll = Scroll(0.0, 0.0)
 
-    spritesheet = SpriteSheet("hero-run")
-    images = spritesheet.get_all()
+    spritesheet_parser = SpriteSheetParser("hero-run")
+    animation_repository = spritesheet_parser.build_animation_repository()
+
+    print(animation_repository)
 
     # main game loop
     while True:
