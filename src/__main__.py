@@ -23,6 +23,10 @@ from src.utils import load_image_asset
 
 
 def main():
+    """
+    Entry point which runs the main game loop.
+    """
+
     pygame.init()
     game_clock = Clock()
 
