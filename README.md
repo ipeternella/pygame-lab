@@ -1,14 +1,18 @@
-# Pygame Lab 01
-
-🧪 A lab for playing around with Pygame and exploring its capabilities. 🧪
+# 🧪 Pygame Lab 🐍
 
 ![Pygame Gameplay](docs/gif/gameplay.gif)
 
-This project is a WIP.
+A repo with some experiments with Pygame in order to explore its capabilities.
 
-## Object
+This project is a WIP (and may forever remain as one).
 
-This project is a study repo to explore Pygame's graphics library capabilities, to test some concepts and to create utility functions/ideas that can be used in other projects.
+## Objective
+
+This project is a study repo created to:
+
+1. Explore the wonderful Pygame's graphics library
+2. Code and test some gaming concepts (collisions, animations, cameras, tilesets, etc.)
+3. Create utility functions/ideas that can be used in other Pygame projects
 
 ## Used tools
 
