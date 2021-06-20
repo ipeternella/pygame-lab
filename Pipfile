@@ -18,7 +18,8 @@ pytest-cov = "*"
 pygame = "*"
 
 [scripts]
-start = "python src/main.py"
+start = "python -m src"
+test = "pytest -vv"
 
 [requires]
 python_version = "3.9"
