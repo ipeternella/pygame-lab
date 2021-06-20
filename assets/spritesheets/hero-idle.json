@@ -1,6 +1,6 @@
 {
   "frames": {
-    "hero-run-0": {
+    "hero-idle-0": {
       "frame": {
         "x": 0,
         "y": 0,
@@ -19,9 +19,9 @@
         "w": 16,
         "h": 16
       },
-      "duration": 30
+      "duration": 200
     },
-    "hero-run-1": {
+    "hero-idle-1": {
       "frame": {
         "x": 16,
         "y": 0,
@@ -40,9 +40,9 @@
         "w": 16,
         "h": 16
       },
-      "duration": 30
+      "duration": 200
     },
-    "hero-run-2": {
+    "hero-idle-2": {
       "frame": {
         "x": 32,
         "y": 0,
@@ -61,9 +61,9 @@
         "w": 16,
         "h": 16
       },
-      "duration": 30
+      "duration": 200
     },
-    "hero-run-3": {
+    "hero-idle-3": {
       "frame": {
         "x": 48,
         "y": 0,
@@ -82,13 +82,13 @@
         "w": 16,
         "h": 16
       },
-      "duration": 30
+      "duration": 200
     }
   },
   "meta": {
     "app": "http://www.aseprite.org/",
     "version": "1.2.27",
-    "image": "hero-run.png",
+    "image": "hero-idle.png",
     "format": "RGBA8888",
     "size": {
       "w": 64,
@@ -97,7 +97,7 @@
     "scale": "1",
     "frameTags": [
       {
-        "name": "run",
+        "name": "idle",
         "from": 0,
         "to": 3,
         "direction": "forward"

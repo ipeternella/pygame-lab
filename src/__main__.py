@@ -6,6 +6,7 @@ import pygame
 from pygame.surface import Surface
 from pygame.time import Clock
 
+from src.animations import AnimationRepository
 from src.animations import SpriteSheetParser
 from src.collisions import move
 from src.exit import exit_if_captured_quit
@@ -35,19 +36,24 @@ def main():
     # images
     grass_img = load_image_asset("img/grass.png")
     dirt_img = load_image_asset("img/dirt.png")
-    player_img = load_image_asset("img/hero.png")
 
     # level
     level_01 = load_level_map("level-01")
 
+    spritesheet_parser = SpriteSheetParser()
+
+    # loading player's spritesheets
+    spritesheet_parser.load_spritesheet("hero-idle")
+    idle_repository = spritesheet_parser.build_animation_repository()
+
+    spritesheet_parser.load_spritesheet("hero-run")
+    run_repository = spritesheet_parser.build_animation_repository()
+
+    player_animations: AnimationRepository = {**idle_repository, **run_repository}
+
     # player
-    player = Player(50, 50, player_img)
+    player = Player(50, 50, player_animations)
     scroll = Scroll(0.0, 0.0)
-
-    spritesheet_parser = SpriteSheetParser("hero-run")
-    animation_repository = spritesheet_parser.build_animation_repository()
-
-    print(animation_repository)
 
     # main game loop
     while True:
@@ -64,7 +70,7 @@ def main():
         move(player.rect, player.speed, tile_rects)  # update player + collisions
 
         # scale display is what is blit on the game screen
-        raw_display.blit(player_img, (player.rect.x - scroll.offset_x, player.rect.y - scroll.offset_y))
+        raw_display.blit(player.image, (player.rect.x - scroll.offset_x, player.rect.y - scroll.offset_y))
         scaled_display = pygame.transform.scale(raw_display, WINDOW_SIZE)
         game_screen.blit(scaled_display, (0, 0))
 

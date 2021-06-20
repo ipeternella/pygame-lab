@@ -13,7 +13,8 @@ from pygame.surface import Surface
 from src.settings import ASSETS_DIR
 
 ImageFrames = TypedDict("ImageFrames", {"image_id": str, "image": Surface, "frames": int})
-AnimationRepository = Dict[str, List[ImageFrames]]  # main key is the action name for each animation
+AnimationRepository = Dict[str, List[ImageFrames]]  # main key is the action name for each animation frames
+ImageRepository = Dict[str, Surface]  # main key is the id for each image
 
 
 class SpriteSheetParser:
@@ -24,18 +25,18 @@ class SpriteSheetParser:
     _spritesheet_image: pygame.surface.Surface
     _spritesheet_json: Dict[str, Any]
 
-    def __init__(self, spritesheet_name: str) -> None:
-        png_path = ASSETS_DIR.joinpath(f"spritesheets/{spritesheet_name}.png")
-        json_path = ASSETS_DIR.joinpath(f"spritesheets/{spritesheet_name}.json")
-
-        self._spritesheet_image = pygame.image.load(png_path)
-        self._spritesheet_json = self._load_json(json_path)
-
     def _load_json(self, json_path: str) -> Dict:
         with open(json_path) as json_file:
             data = json.load(json_file)
 
         return data
+
+    def load_spritesheet(self, spritesheet_name: str) -> None:
+        png_path = ASSETS_DIR.joinpath(f"spritesheets/{spritesheet_name}.png")
+        json_path = ASSETS_DIR.joinpath(f"spritesheets/{spritesheet_name}.json")
+
+        self._spritesheet_image = pygame.image.load(png_path)
+        self._spritesheet_json = self._load_json(json_path)
 
     def build_animation_repository(self) -> AnimationRepository:
         animation_repository: AnimationRepository = {}
@@ -53,17 +54,17 @@ class SpriteSheetParser:
             frames_duration = frame_metadata["duration"]
 
             rect = pygame.Rect(frame_x, frame_y, frame_width, frame_height)
-            image = pygame.Surface(rect.size)  # blank image surface
+            image = pygame.Surface(rect.size, pygame.SRCALPHA)  # blank image surface
 
             image.blit(self._spritesheet_image, (0, 0), rect)  # blit on top of the image surface
 
             if animation_action_name not in animation_repository:
                 animation_repository[animation_action_name] = [
-                    {"image_id": image_id, "image": image, "frames": frames_duration // 100}
+                    {"image_id": image_id, "image": image, "frames": frames_duration // 10}
                 ]
             else:
                 animation_repository[animation_action_name] += [
-                    {"image_id": image_id, "image": image, "frames": frames_duration // 100}
+                    {"image_id": image_id, "image": image, "frames": frames_duration // 10}
                 ]
 
             current_frame += 1
