@@ -14,7 +14,6 @@ from src.settings import ASSETS_DIR
 
 ImageFrames = TypedDict("ImageFrames", {"image_id": str, "image": Surface, "frames": int})
 AnimationRepository = Dict[str, List[ImageFrames]]  # main key is the action name for each animation frames
-ImageRepository = Dict[str, Surface]  # main key is the id for each image
 
 
 class SpriteSheetParser:

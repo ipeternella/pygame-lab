@@ -15,6 +15,9 @@ from src.settings import JUMP_VELOCITY_Y
 
 
 class Player:
+    """
+    Represents the main player (hero) of the game.
+    """
 
     _rect: Rect  # contains (x, y) coordinates
     _image: Surface

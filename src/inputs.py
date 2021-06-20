@@ -15,6 +15,10 @@ from pygame.event import Event
 
 @dataclass
 class CapturedInput:
+    """
+    Represents a captured input from the player.
+    """
+
     should_quit: bool = False
 
     moving_left: bool = False

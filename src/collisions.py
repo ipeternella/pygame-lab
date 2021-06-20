@@ -10,6 +10,10 @@ from pygame import Rect
 
 
 def get_collisions(player_rect: Rect, tiles: List[Rect]) -> List[Rect]:
+    """
+    Returns the rects that have collided with the player.
+    """
+
     return [tile for tile in tiles if player_rect.colliderect(tile)]
 
 
