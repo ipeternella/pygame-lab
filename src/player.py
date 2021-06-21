@@ -6,7 +6,7 @@ from typing import List
 
 import pygame
 from pygame import Rect
-from pygame import Surface
+from pygame.surface import Surface
 
 from src.animations import AnimationRepository
 from src.inputs import CapturedInput
