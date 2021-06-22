@@ -103,7 +103,7 @@
         "w": 16,
         "h": 16
       },
-      "duration": 50
+      "duration": 30
     },
     "hero-run-1": {
       "frame": {
@@ -166,7 +166,7 @@
         "w": 16,
         "h": 16
       },
-      "duration": 50
+      "duration": 30
     }
   },
   "meta": {
