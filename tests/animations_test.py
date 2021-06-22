@@ -17,13 +17,21 @@ def test_should_load_spritesheet_png_and_json():
     assert parser.spritesheet_image.get_height() == 16
 
     # assert - json frames
-    assert len(parser.spritesheet_json["frames"]) == 4
-    assert [*parser.spritesheet_json["frames"]] == ["hero-idle-0", "hero-idle-1", "hero-idle-2", "hero-idle-3"]
+    assert len(parser.spritesheet_json["frames"]) == 6
+    assert [*parser.spritesheet_json["frames"]] == [
+        "hero-idle-0",
+        "hero-idle-1",
+        "hero-idle-2",
+        "hero-idle-3",
+        "hero-run-0",
+        "hero-run-1",
+    ]
 
     # assert - json frameTags
-    assert len(parser.spritesheet_json["meta"]["frameTags"]) == 1
+    assert len(parser.spritesheet_json["meta"]["frameTags"]) == 2
     assert parser.spritesheet_json["meta"]["frameTags"] == [
-        {"name": "idle", "from": 0, "to": 3, "direction": "forward"}
+        {"name": "idle", "from": 0, "to": 3, "direction": "forward"},
+        {"name": "run", "from": 4, "to": 5, "direction": "forward"},
     ]
 
 
