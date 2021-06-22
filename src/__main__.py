@@ -47,13 +47,8 @@ def main():
     spritesheet_parser = SpriteSheetParser()
 
     # loading player's spritesheets
-    spritesheet_parser.load_spritesheet("hero-idle")
-    idle_repository = spritesheet_parser.build_animation_repository()
-
-    spritesheet_parser.load_spritesheet("hero-run")
-    run_repository = spritesheet_parser.build_animation_repository()
-
-    player_animations: AnimationRepository = {**idle_repository, **run_repository}
+    spritesheet_parser.load_spritesheet("hero")
+    player_animations = spritesheet_parser.build_animation_repository()
 
     # player
     player = Player(50, 50, player_animations)
