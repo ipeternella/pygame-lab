@@ -15,12 +15,12 @@ from src.settings import ROOT_DIR
 from src.settings import TILE_SIZE
 
 
-def load_level_map(map_name: str, map_assets_folder: str = "assets/maps") -> List[List[str]]:
+def load_level_map(map_name: str, map_assets_folder: str = "assets/maps/") -> List[List[str]]:
     """
     Reads a map level file and transforms it into a matrix of tile strings.
     """
     tile_map: List[List[str]] = []
-    level_map_path = os.path.join(ROOT_DIR, f"{map_assets_folder}/{map_name}")
+    level_map_path = ROOT_DIR.joinpath(map_assets_folder, map_name)
 
     with open(level_map_path) as map_file:
         all_map_data = map_file.read()

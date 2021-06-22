@@ -10,7 +10,7 @@ from typing import TypedDict
 import pygame
 from pygame.surface import Surface
 
-from src.settings import ASSETS_DIR
+from src.settings import ROOT_DIR
 
 ImageFrames = TypedDict("ImageFrames", {"image_id": str, "image": Surface, "frames": int})
 AnimationRepository = Dict[str, List[ImageFrames]]  # main key is the action name for each animation frames
@@ -21,21 +21,26 @@ class SpriteSheetParser:
     Utility class used to parse animations from spritesheets and their position json.
     """
 
-    _spritesheet_image: pygame.surface.Surface
+    _spritesheet_image: Surface
     _spritesheet_json: Dict[str, Any]
 
-    def _load_json(self, json_path: str) -> Dict:
-        with open(json_path) as json_file:
-            data = json.load(json_file)
+    @property
+    def spritesheet_image(self) -> Surface:
+        return self._spritesheet_image
 
-        return data
+    @property
+    def spritesheet_json(self) -> Dict:
+        return self._spritesheet_json
 
-    def load_spritesheet(self, spritesheet_name: str) -> None:
-        png_path = ASSETS_DIR.joinpath(f"spritesheets/{spritesheet_name}.png")
-        json_path = ASSETS_DIR.joinpath(f"spritesheets/{spritesheet_name}.json")
+    def load_spritesheet(self, spritesheet_name: str, spritesheet_path: str = "assets/spritesheets/") -> None:
+        """
+        Loads a spritesheet png image and its position json file into the instance's state.
+        """
+        spritesheet_png_path = ROOT_DIR.joinpath(spritesheet_path, f"{spritesheet_name}.png")
+        spritesheet_json_path = ROOT_DIR.joinpath(spritesheet_path, f"{spritesheet_name}.json")
 
-        self._spritesheet_image = pygame.image.load(png_path)
-        self._spritesheet_json = self._load_json(json_path)
+        self._spritesheet_image = pygame.image.load(spritesheet_png_path)
+        self._spritesheet_json = self._load_json(spritesheet_json_path)
 
     def build_animation_repository(self) -> AnimationRepository:
         animation_repository: AnimationRepository = {}
@@ -80,3 +85,12 @@ class SpriteSheetParser:
                 animation_action_name = meta_tags[current_frame_tag]["name"]
 
         return animation_repository
+
+    def _load_json(self, json_path: str) -> Dict:
+        """
+        Fetches a json file from disk and deserializes it into a dictionary.
+        """
+        with open(json_path) as json_file:
+            data = json.load(json_file)
+
+        return data

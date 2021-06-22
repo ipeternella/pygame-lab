@@ -6,11 +6,13 @@ import os
 import pygame
 from pygame.surface import Surface
 
-from src.settings import ASSETS_DIR
+from src.settings import ROOT_DIR
 
 
-def load_image_asset(image_path: str) -> Surface:
+def load_image_asset(image_path: str, assets_dir="assets/") -> Surface:
     """
-    Loads an image from disk with Pygame that is relative to the ASSETS_DIR.
+    Loads an image from disk with Pygame. Returns a pygame Surface.
     """
-    return pygame.image.load(os.path.join(ASSETS_DIR, image_path))
+    img_asset_path = ROOT_DIR.joinpath(assets_dir, image_path)
+
+    return pygame.image.load(img_asset_path)
