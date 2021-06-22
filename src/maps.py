@@ -2,7 +2,6 @@
 Module with some maps of the levels.
 """
 
-import os
 from typing import List
 
 import pygame

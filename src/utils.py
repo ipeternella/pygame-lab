@@ -1,8 +1,6 @@
 """
 Module with some utilities.
 """
-import os
-
 import pygame
 from pygame.surface import Surface
 
