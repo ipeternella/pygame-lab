@@ -16,6 +16,81 @@ ImageFrames = TypedDict("ImageFrames", {"image_id": str, "image": Surface, "fram
 AnimationRepository = Dict[str, List[ImageFrames]]  # main key is the action name for each animation frames
 
 
+class Animator:
+    """
+    Class used to generate sprite images according to an animation repository.
+    """
+
+    _repository: AnimationRepository
+    _image: Surface
+    _current_image_position: int
+    _image_total_frames: int
+    _image_frame_counter: int
+    _animation_action: str
+
+    def __init__(self, initial_action: str, animation_repository: AnimationRepository) -> None:
+        self._repository = animation_repository
+        self._animation_action = initial_action
+        self._current_image_position = 0  # index inside action images list
+        self._image_frame_counter = 0  # current frame position of the same image
+        self._image_total_frames = self._fetch_current_image_total_frames()
+        self._image = self._repository[self._animation_action][0]["image"]
+
+    @property
+    def image(self) -> Surface:
+        return self._image
+
+    def update(self):
+        """
+        Called once per frame in order to advance the animation state to fetch next frames/images.
+        """
+        action_image_list = self._repository[self._animation_action]
+        self._image = action_image_list[self._current_image_position]["image"]
+
+        self._advance_animation(action_image_list)
+
+    def change_action(self, new_animation_action: str) -> None:
+        """
+        Changes the current animation action in order to fetch its respective action image list. This method resets
+        the animator state only if the new action is different than the current one.
+        """
+        if new_animation_action != self._animation_action:
+            self._animation_action = new_animation_action
+            self._image_frame_counter = 0
+            self._current_image_position = 0
+            self._image_total_frames = self._fetch_current_image_total_frames()
+
+    def _fetch_current_image_total_frames(self) -> int:
+        """
+        Given the current self._animation_action and self._current_image_position (index inside the action
+        list), returns the total number of frames that the current image from the repository should be displayed.
+
+        Example: {"run": [{"image": Surface, "frames": 10}, ...]} <--- returns 10
+        """
+        return self._repository[self._animation_action][self._current_image_position]["frames"]
+
+    def _advance_animation(self, action_image_list: List[ImageFrames]):
+        """
+        Advance the current animation frame. If the current image frame (self._image_frame_counter) has reached
+        its total frames (self._image_total_frames), then the next image from the repository is fetched by
+        advancing self._current_image_position.
+
+        If self._current_image_position > length of the action image list, then the list is repeated by
+        setting self._current_image_position = 0, self._image_frame_counter = 0.
+        """
+        self._image_frame_counter += 1
+
+        # stick to the same animation image until its frames are out in the repository, then advance!
+        if self._image_frame_counter > self._image_total_frames:
+            self._image_frame_counter = 0
+            self._current_image_position += 1
+
+            if self._current_image_position > len(action_image_list) - 1:
+                self._current_image_position = 0
+
+            self._image_total_frames = self._fetch_current_image_total_frames()
+
+
 class SpriteSheetParser:
     """
     Utility class used to parse animations from spritesheets and their position json.

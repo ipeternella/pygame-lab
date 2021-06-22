@@ -6,7 +6,6 @@ import pygame
 from pygame.surface import Surface
 from pygame.time import Clock
 
-from src.animations import AnimationRepository
 from src.animations import SpriteSheetParser
 from src.collisions import move
 from src.exit import exit_if_captured_quit
@@ -15,6 +14,7 @@ from src.maps import load_level_map
 from src.maps import render_level_map
 from src.player import Player
 from src.scrolling import Scroll
+from src.settings import CLEAR_DISPLAY_RGB
 from src.settings import GAME_FPS
 from src.settings import RAW_DISPLAY_SIZE
 from src.settings import WINDOW_SIZE
@@ -56,7 +56,7 @@ def main():
 
     # main game loop
     while True:
-        raw_display.fill((146, 244, 255))  # clears the display
+        raw_display.fill(CLEAR_DISPLAY_RGB)  # clears the display
         scroll.update(player.rect.x, player.rect.y)  # update scrolling according to last player's updated position
         tile_rects = render_level_map(raw_display, [dirt_img, grass_img], level_01, player, scroll)
 

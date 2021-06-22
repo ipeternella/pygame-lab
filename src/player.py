@@ -9,6 +9,7 @@ from pygame import Rect
 from pygame.surface import Surface
 
 from src.animations import AnimationRepository
+from src.animations import Animator
 from src.inputs import CapturedInput
 from src.settings import GRAVITY
 from src.settings import JUMP_VELOCITY_Y
@@ -22,21 +23,20 @@ class Player:
     _rect: Rect  # contains (x, y) coordinates
     _image: Surface
     _image_flip: bool
-    _animation_repository: AnimationRepository
-    _animation_current_frame: int
-    _animation_current_position: int
+    _animator: Animator
     _action: str
     _moving_right: bool
     _moving_left: bool
     _speed: List[int]
 
     def __init__(self, x: float, y: float, animation_repository: AnimationRepository) -> None:
-        self._animation_repository = animation_repository
-        self._animation_current_position = 0
-        self._animation_current_frame = 0
+        # animation state
         self._action = "idle"
-        self._image = self._animation_repository[self._action][self._animation_current_position]["image"]
+        self._animator = Animator(self._action, animation_repository)
+        self._image = self._animator.image  # images always come from the animator
         self._image_flip = False
+
+        # collisions and movement
         self._rect = Rect(x, y, self._image.get_width(), self._image.get_height())
         self._speed = [0, 0]
         self._moving_left = False
@@ -53,15 +53,9 @@ class Player:
     @property
     def image(self) -> Surface:
         if self._image_flip:
-            return pygame.transform.flip(self._image, True, False)
+            return pygame.transform.flip(self._animator.image, True, False)
 
-        return self._image
-
-    def _change_animation(self, new_action: str) -> None:
-        if new_action != self._action:
-            self._animation_current_frame = 0
-            self._animation_current_position = 0
-            self._action = new_action
+        return self._animator.image
 
     def update(self, captured_inputs: CapturedInput) -> None:
         """
@@ -83,17 +77,17 @@ class Player:
 
         # x axis
         if self._moving_right:
-            self._change_animation("run")
+            self._animator.change_action("run")
             self._image_flip = False
             self._speed[0] += 2
 
         if self._moving_left:
-            self._change_animation("run")
+            self._animator.change_action("run")
             self._image_flip = True
             self._speed[0] -= 2
 
         if not self._moving_left and not self._moving_right:
-            self._change_animation("idle")
+            self._animator.change_action("idle")
 
         # y axis: always updated as gravity always drags down
         self._speed[1] += GRAVITY
@@ -101,19 +95,4 @@ class Player:
         if self._speed[1] > 3:  # clamping
             self._speed[1] = 3
 
-        animations = self._animation_repository[self._action]
-        self._image = animations[self._animation_current_position]["image"]
-
-        # update animations
-        self._animation_current_frame += 1
-
-        # stick to the same image until its frames are out
-        if (
-            self._animation_current_frame
-            > self._animation_repository[self._action][self._animation_current_position]["frames"]
-        ):
-            self._animation_current_frame = 0
-            self._animation_current_position += 1
-
-            if self._animation_current_position > len(animations) - 1:
-                self._animation_current_position = 0
+        self._animator.update()
