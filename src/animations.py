@@ -43,6 +43,14 @@ class SpriteSheetParser:
         self._spritesheet_json = self._load_json(spritesheet_json_path)
 
     def build_animation_repository(self) -> AnimationRepository:
+        """
+        After having loaded a spritesheet png and its json, this method can be used to build an animation repository
+        which is a dictionary in which each key is an animation action (defined by 'frameTags' name). As such, this
+        method requires that the spritesheet json contains a frameTag name property. Each group of frames are loaded
+        into the animation repository dictionary under their action name (frameTags.name).
+
+        This method is heavily dependent on Aseprite's json format, including the frameTags section.
+        """
         animation_repository: AnimationRepository = {}
         meta_tags: List[Dict] = self._spritesheet_json["meta"]["frameTags"]
 

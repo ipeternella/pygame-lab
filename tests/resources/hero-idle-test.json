@@ -82,7 +82,49 @@
                 "w": 16,
                 "h": 16
             },
-            "duration": 200
+            "duration": 400
+        },
+        "hero-run-0": {
+            "frame": {
+                "x": 64,
+                "y": 0,
+                "w": 16,
+                "h": 16
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 16,
+                "h": 16
+            },
+            "sourceSize": {
+                "w": 16,
+                "h": 16
+            },
+            "duration": 100
+        },
+        "hero-run-1": {
+            "frame": {
+                "x": 80,
+                "y": 0,
+                "w": 16,
+                "h": 16
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 16,
+                "h": 16
+            },
+            "sourceSize": {
+                "w": 16,
+                "h": 16
+            },
+            "duration": 300
         }
     },
     "meta": {
@@ -91,6 +133,12 @@
                 "name": "idle",
                 "from": 0,
                 "to": 3,
+                "direction": "forward"
+            },
+            {
+                "name": "run",
+                "from": 4,
+                "to": 5,
                 "direction": "forward"
             }
         ]
