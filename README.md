@@ -2,9 +2,9 @@
 
 <h3 align="center">A repo with Pygame experiments in order to explore its potential!</h3>
 
-![Pygame Gameplay](docs/gif/gameplay.gif)
-
-This project is a WIP (and may forever remain as one).
+<p align="center">
+  <img src="docs/gif/gameplay.gif" alt="animated" />
+</p>
 
 ## Objective
 
@@ -13,6 +13,8 @@ This project is a study repo created to:
 1. Explore the wonderful Pygame's graphics library
 2. Code and test some gaming concepts (collisions, animations, cameras, tilesets, etc.)
 3. Create utility functions/ideas that can be used in other Pygame projects
+
+`PS`: This project is a WIP (and may forever remain as one).
 
 ## Used tools
 
