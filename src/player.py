@@ -24,15 +24,13 @@ class Player:
     _image: Surface
     _image_flip: bool
     _animator: Animator
-    _action: str
     _moving_right: bool
     _moving_left: bool
     _speed: List[int]
 
     def __init__(self, x: float, y: float, animation_repository: AnimationRepository) -> None:
         # animation state
-        self._action = "idle"
-        self._animator = Animator(self._action, animation_repository)
+        self._animator = Animator("idle", animation_repository)
         self._image = self._animator.image  # images always come from the animator
         self._image_flip = False
 

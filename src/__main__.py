@@ -10,8 +10,7 @@ from src.animations import SpriteSheetParser
 from src.collisions import move
 from src.exit import exit_if_captured_quit
 from src.inputs import capture_player_inputs
-from src.maps import load_level_map
-from src.maps import render_level_map
+from src.maps import TiledMap
 from src.player import Player
 from src.scrolling import Scroll
 from src.settings import CLEAR_DISPLAY_RGB
@@ -19,7 +18,6 @@ from src.settings import GAME_FPS
 from src.settings import RAW_DISPLAY_SIZE
 from src.settings import WINDOW_SIZE
 from src.settings import WINDOW_TITLE
-from src.utils import load_image_asset
 
 
 def main():
@@ -38,12 +36,7 @@ def main():
     raw_display = pygame.Surface(RAW_DISPLAY_SIZE)
 
     # images
-    grass_img = load_image_asset("img/grass.png")
-    dirt_img = load_image_asset("img/dirt.png")
-
-    # level
-    level_01 = load_level_map("level-01")
-
+    tiled_level_01 = TiledMap("tiled-level-01.tmx")
     spritesheet_parser = SpriteSheetParser()
 
     # loading player's spritesheets
@@ -51,14 +44,15 @@ def main():
     player_animations = spritesheet_parser.build_animation_repository()
 
     # player
-    player = Player(50, 50, player_animations)
+    player = Player(10, 10, player_animations)
     scroll = Scroll(0.0, 0.0)
 
     # main game loop
     while True:
         raw_display.fill(CLEAR_DISPLAY_RGB)  # clears the display
+
         scroll.update(player.rect.x, player.rect.y)  # update scrolling according to last player's updated position
-        tile_rects = render_level_map(raw_display, [dirt_img, grass_img], level_01, player, scroll)
+        tile_rects = tiled_level_01.render(raw_display, scroll)
 
         # input capturing
         captured_input = capture_player_inputs()
