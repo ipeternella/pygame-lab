@@ -1,8 +1,8 @@
-# 🧪 Pygame Lab 🐍
+<h1 align="center">🎮 Pygame Lab 🐍</h1>
+
+<h3 align="center">A repo with Pygame experiments in order to explore its potential!</h3>
 
 ![Pygame Gameplay](docs/gif/gameplay.gif)
-
-A repo with some experiments with Pygame in order to explore its capabilities.
 
 This project is a WIP (and may forever remain as one).
 
@@ -21,6 +21,7 @@ This project, so far, uses the following tools (among many others):
 - `Python 3.9` as the project's programming language
 - `Pygame` as the main graphics library
 - `Aseprite` for sprites/pixel-art drawings
+- `Tiled` for tilesets and tiled maps editing
 - `Pytest` as the main testing framework/test runner
 
 ## Graphics
