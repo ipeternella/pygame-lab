@@ -16,6 +16,7 @@ pytest-cov = "*"
 
 [packages]
 pygame = "*"
+pytmx = "*"
 
 [scripts]
 start = "python -m src"
