@@ -1,17 +1,11 @@
 """
 Module with some maps of the levels.
 """
-
-from typing import List
-
-import pygame
 import pytmx
-from pygame import Rect
 from pygame.surface import Surface
 
 from src.scrolling import Scroll
 from src.settings import ROOT_DIR
-from src.settings import TILE_SIZE
 
 
 class TiledMap:
@@ -39,16 +33,14 @@ class TiledMap:
     def tmx_map(self) -> pytmx.TiledMap:
         return self._tmx_map
 
-    def render(self, raw_display: Surface, scroll: Scroll) -> List[Rect]:
-        rects = []
-
+    def render_on(self, raw_display: Surface, scroll: Scroll) -> None:
         for visible_layer in self._tmx_map.visible_layers:
             # only visible layers
             if isinstance(visible_layer, pytmx.TiledTileLayer):
                 for x, y, gid in visible_layer:
                     tile: Surface = self._tmx_map.get_tile_image_by_gid(gid)
 
-                    if tile:
+                    if tile is not None:
                         raw_display.blit(
                             tile,
                             (
@@ -56,8 +48,3 @@ class TiledMap:
                                 y * self._tmx_map.tileheight - scroll.offset_y,
                             ),
                         )
-                        rects.append(
-                            pygame.Rect(x * self._tmx_map.tilewidth, y * self._tmx_map.tileheight, TILE_SIZE, TILE_SIZE)
-                        )
-
-        return rects

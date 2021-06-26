@@ -19,3 +19,7 @@ JUMP_VELOCITY_Y = 15
 
 # scrolling (gives smooth scrolling effect) -> set 1 for simple scrolling
 SCROLLING_OFFSET_FRACTION = 0.05
+
+# maps tags
+TMX_OBJECT_PLAYER_NAME = "player"
+TMX_OBJECT_COLLIDABLE_NAME = "collidable"
