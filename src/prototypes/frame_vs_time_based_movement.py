@@ -43,7 +43,8 @@ class FrameRateDependentPlayer(Sprite):
         self.rect = self.image.get_rect()
         self.rect.left = 0
         self.rect.top = 100
-        self._velocity_x = 2  # (pixel/frame)
+        self._velocity_x = 2  # (pixel/frame) - frame-based movement
+        # self._velocity_x = 120 # (120 pixels/s) - time-based movement
 
     def update(self, *args, **kwargs) -> None:
         """
