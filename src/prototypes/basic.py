@@ -17,6 +17,7 @@ FPS = 60
 
 BLACK = (0, 0, 0)
 GREEN = (255, 255, 255)
+GRAY = (50, 50, 50)
 YELLOW = (255, 255, 0)
 
 
@@ -40,6 +41,26 @@ class Player(Sprite):
         super().update(*args, **kwargs)
 
 
+def draw_grid(screen: Surface, grid_size: int) -> None:
+    """
+    Draws a grid on the screen.
+    """
+    x = 0
+    y = 0
+
+    while y < HEIGHT:
+        if y != 0:  # first vertical line is not drawn
+            pygame.draw.line(screen, GRAY, start_pos=(0, y), end_pos=(WIDTH, y), width=1)
+
+        y += grid_size
+
+    while x < WIDTH:
+        if x != 0:  # first horizontal line is not drawn
+            pygame.draw.line(screen, GRAY, start_pos=(x, 0), end_pos=(x, HEIGHT), width=1)
+
+        x += grid_size
+
+
 def main():
     # init code
     pygame.init()
@@ -53,6 +74,8 @@ def main():
     # main game loop
     while True:
         screen.fill(BLACK)
+        draw_grid(screen, 50)
+
         all_sprites_group.update()
         all_sprites_group.draw(screen)  # blits the image at rect's position
 
