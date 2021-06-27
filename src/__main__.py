@@ -28,9 +28,9 @@ def main():
     """
     Entry point which runs the main game loop.
     """
-
     pygame.init()
     game_clock = Clock()
+    dt = 0
 
     # main screen
     game_screen: Surface = pygame.display.set_mode(WINDOW_SIZE, 0, 32)
@@ -65,24 +65,25 @@ def main():
     # main game loop
     while True:
         raw_display.fill(CLEAR_DISPLAY_RGB)  # clears the display
-        scroll_offset.update(player.rect.x, player.rect.y)  # update scrolling according player
+        dt = game_clock.tick(GAME_FPS) / 1000  # seconds since last frame (last clock tick)
 
-        # input handling and state update
+        # input capturing
         captured_input = capture_player_inputs()
+
+        # state update according to inputs
         exit_if_captured_quit(captured_input)
+        scroll_offset.update(player.rect.x, player.rect.y)  # update scrolling according player
+        player.update(captured_input, dt, collidables)
 
-        player.update(captured_input, collidables)
-
-        # rendering
-        player.render_on(raw_display, scroll_offset)
+        # rendering updated state
         level_01.render_on(raw_display, scroll_offset)
+        player.render_on(raw_display, scroll_offset)
 
         # scale display is what is blit on the game screen
         scaled_display = pygame.transform.scale(raw_display, WINDOW_SIZE)
         game_screen.blit(scaled_display, (0, 0))
 
         pygame.display.update()
-        game_clock.tick(GAME_FPS)
 
 
 if __name__ == "__main__":
