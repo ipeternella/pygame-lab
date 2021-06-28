@@ -5,7 +5,6 @@ from typing import Dict
 
 import pygame
 from pygame import Rect
-from pygame import Surface
 from pygame.math import Vector2
 from pygame.sprite import AbstractGroup
 from pygame.sprite import Group
@@ -15,7 +14,6 @@ from pygame.sprite import spritecollide
 from src.animations import AnimationRepository
 from src.animations import Animator
 from src.inputs import CapturedInput
-from src.scrolling import Scroll
 from src.settings import GRAVITY
 from src.settings import JUMP_VELOCITY_Y
 from src.settings import MAX_VELOCITY_Y
@@ -69,13 +67,6 @@ class Player(Sprite):
         self._update_with_inputs(captured_input, dt)
         self._move(collidables)
         self._animate()
-
-    def render_on(self, display: Surface, scroll: Scroll) -> None:
-        """
-        Blits the player image onto the display's surface.
-        """
-        if self.image and self.rect:
-            display.blit(self.image, (self.rect.x - scroll.offset_x, self.rect.y - scroll.offset_y))
 
     def _update_with_inputs(self, captured_input: CapturedInput, dt: int) -> None:
         """

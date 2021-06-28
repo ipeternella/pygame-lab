@@ -1,10 +1,12 @@
 """
 Module with some maps of the levels.
 """
+from typing import Tuple
+
 import pytmx
 from pygame.surface import Surface
 
-from src.scrolling import Scroll
+from src.settings import CLEAR_DISPLAY_RGB
 from src.settings import ROOT_DIR
 
 
@@ -33,7 +35,7 @@ class TiledMap:
     def tmx_map(self) -> pytmx.TiledMap:
         return self._tmx_map
 
-    def render_on(self, raw_display: Surface, scroll: Scroll) -> None:
+    def render_on(self, raw_display: Surface) -> None:
         for visible_layer in self._tmx_map.visible_layers:
             # only visible layers
             if isinstance(visible_layer, pytmx.TiledTileLayer):
@@ -43,8 +45,12 @@ class TiledMap:
                     if tile is not None:
                         raw_display.blit(
                             tile,
-                            (
-                                x * self._tmx_map.tilewidth - scroll.offset_x,
-                                y * self._tmx_map.tileheight - scroll.offset_y,
-                            ),
+                            (x * self._tmx_map.tilewidth, y * self._tmx_map.tileheight),
                         )
+
+    def build_map(self, clear_color: Tuple[int, int, int] = CLEAR_DISPLAY_RGB) -> Surface:
+        tmp = Surface((self.total_map_width, self.total_map_height))
+        tmp.fill(clear_color)
+        self.render_on(tmp)
+
+        return tmp

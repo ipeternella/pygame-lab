@@ -9,12 +9,12 @@ from pygame.time import Clock
 from pytmx.pytmx import TiledObjectGroup
 
 from src.animations import SpriteSheetParser
+from src.camera import Camera
 from src.collidables import Collidable
 from src.exit import exit_if_captured_quit
 from src.inputs import capture_player_inputs
 from src.maps import TiledMap
 from src.player import Player
-from src.scrolling import Scroll
 from src.settings import CLEAR_DISPLAY_RGB
 from src.settings import GAME_FPS
 from src.settings import RAW_DISPLAY_SIZE
@@ -41,6 +41,8 @@ def main():
 
     # maps
     level_01 = TiledMap("tiled-level-01.tmx")
+    level_01_img = level_01.build_map()
+    camera = Camera(level_01.total_map_width, level_01.total_map_height)
 
     # other spritesheets and animations
     spritesheet_parser = SpriteSheetParser()
@@ -49,15 +51,15 @@ def main():
     player_animations = spritesheet_parser.build_animation_repository()
 
     # sprites and groups
-    scroll_offset = Scroll(0.0, 0.0)
     collidables = Group()
+    all_sprites = Group()
 
     # objects in objects layer: map parsing
     tile_object: TiledObjectGroup
 
     for tile_object in level_01.tmx_map.objects:
         if tile_object.name == TMX_OBJECT_PLAYER_NAME:
-            player = Player(tile_object.x, tile_object.y, player_animations)
+            player = Player(tile_object.x, tile_object.y, player_animations, all_sprites)
 
         if tile_object.name == TMX_OBJECT_COLLIDABLE_NAME:
             Collidable(tile_object.x, tile_object.y, tile_object.width, tile_object.height, collidables)
@@ -65,25 +67,25 @@ def main():
     # main game loop
     while True:
         raw_display.fill(CLEAR_DISPLAY_RGB)  # clears the display
-        dt = game_clock.tick(GAME_FPS) / 1000  # seconds since last frame (last clock tick)
+        raw_display.blit(level_01_img, camera.apply_offset(level_01_img.get_rect()))  # shifts by the camera offset
 
         # input capturing
         captured_input = capture_player_inputs()
+        exit_if_captured_quit(captured_input)
 
         # state update according to inputs
-        exit_if_captured_quit(captured_input)
-        scroll_offset.update(player.rect.x, player.rect.y)  # update scrolling according player
         player.update(captured_input, dt, collidables)
+        camera.update(player)
 
-        # rendering updated state
-        level_01.render_on(raw_display, scroll_offset)
-        player.render_on(raw_display, scroll_offset)
+        for sprite in all_sprites:
+            raw_display.blit(sprite.image, camera.apply_offset(sprite.rect))
 
-        # scale display is what is blit on the game screen
+        # scale to the final screen
         scaled_display = pygame.transform.scale(raw_display, WINDOW_SIZE)
         game_screen.blit(scaled_display, (0, 0))
 
         pygame.display.update()
+        dt = game_clock.tick(GAME_FPS) / 1000  # seconds since last frame (last clock tick)
 
 
 if __name__ == "__main__":

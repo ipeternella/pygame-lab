@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.0" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="28">
- <editorsettings>
-  <export target="level-01.tmx" format="tmx"/>
- </editorsettings>
- <tileset firstgid="1" name="tileset-level-01" tilewidth="16" tileheight="16" tilecount="64" columns="8">
-  <image source="tilemap.png" width="128" height="128"/>
- </tileset>
- <layer id="1" name="platforms" width="30" height="30">
-  <data encoding="csv">
+<map version="1.5" tiledversion="1.7.0" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="32">
+  <editorsettings>
+    <export target="level-01.tmx" format="tmx"/>
+  </editorsettings>
+  <tileset firstgid="1" name="tileset-level-01" tilewidth="16" tileheight="16" tilecount="64" columns="8">
+    <image source="tilemap.png" width="128" height="128"/>
+  </tileset>
+  <layer id="1" name="platforms" width="30" height="30">
+    <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -38,10 +38,10 @@
 21,21,21,6,6,22,12,12,12,12,12,12,12,12,12,5,6,6,6,13,13,6,6,6,6,6,6,6,21,6,
 12,12,12,14,14,12,12,12,12,12,12,12,12,12,12,12,14,14,14,12,12,14,14,14,14,14,14,14,12,14,
 14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14
-</data>
- </layer>
- <layer id="2" name="platforms-front" width="30" height="30">
-  <data encoding="csv">
+    </data>
+  </layer>
+  <layer id="2" name="platforms-front" width="30" height="30">
+    <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -72,29 +72,33 @@
 0,0,0,0,0,0,5,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 6,6,6,0,0,6,6,6,6,6,6,6,6,6,6,6,0,0,0,6,6,0,0,0,0,0,0,0,6,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-</data>
- </layer>
- <objectgroup id="3" name="collidables">
-  <object id="3" name="collidable" x="112" y="400" width="112" height="16"/>
-  <object id="4" name="player" x="164" y="324" width="8" height="8"/>
-  <object id="6" name="collidable" x="80" y="432" width="176" height="20"/>
-  <object id="7" name="collidable" x="96" y="416" width="144" height="16"/>
-  <object id="8" name="collidable" x="128" y="384" width="80" height="16"/>
-  <object id="11" name="collidable" x="0" y="224" width="48" height="228"/>
-  <object id="12" name="collidable" x="0" y="208" width="32" height="16"/>
-  <object id="13" name="collidable" x="0" y="192" width="16" height="16"/>
-  <object id="14" name="collidable" x="304" y="416" width="32" height="36"/>
-  <object id="15" name="collidable" x="400" y="256" width="16" height="16"/>
-  <object id="16" name="collidable" x="448" y="368" width="16" height="84"/>
-  <object id="17" name="collidable" x="368" y="368" width="16" height="16"/>
-  <object id="18" name="collidable" x="464" y="304" width="16" height="16"/>
-  <object id="19" name="collidable" x="304" y="208" width="48" height="16"/>
-  <object id="21" name="collidable" x="176" y="256" width="48" height="16"/>
-  <object id="22" name="collidable" x="80" y="160" width="32" height="16"/>
-  <object id="23" name="collidable" x="160" y="128" width="32" height="16"/>
-  <object id="24" name="collidable" x="256" y="96" width="16" height="16"/>
-  <object id="25" name="collidable" x="352" y="96" width="16" height="16"/>
-  <object id="26" name="collidable" x="432" y="144" width="48" height="16"/>
-  <object id="27" name="collidable" x="96" y="288" width="16" height="16"/>
- </objectgroup>
+    </data>
+  </layer>
+  <objectgroup id="3" name="collidables">
+    <object id="3" name="collidable" x="112" y="400" width="112" height="16"/>
+    <object id="4" name="player" x="164" y="324" width="8" height="8"/>
+    <object id="6" name="collidable" x="80" y="432" width="176" height="20"/>
+    <object id="7" name="collidable" x="96" y="416" width="144" height="16"/>
+    <object id="8" name="collidable" x="128" y="384" width="80" height="16"/>
+    <object id="11" name="collidable" x="0" y="224" width="48" height="228"/>
+    <object id="12" name="collidable" x="0" y="208" width="32" height="16"/>
+    <object id="13" name="collidable" x="0" y="192" width="16" height="16"/>
+    <object id="14" name="collidable" x="304" y="416" width="32" height="36"/>
+    <object id="15" name="collidable" x="400" y="256" width="16" height="16"/>
+    <object id="16" name="collidable" x="448" y="368" width="16" height="84"/>
+    <object id="17" name="collidable" x="368" y="368" width="16" height="16"/>
+    <object id="18" name="collidable" x="464" y="304" width="16" height="16"/>
+    <object id="19" name="collidable" x="304" y="208" width="48" height="16"/>
+    <object id="21" name="collidable" x="176" y="256" width="48" height="16"/>
+    <object id="22" name="collidable" x="80" y="160" width="32" height="16"/>
+    <object id="23" name="collidable" x="160" y="128" width="32" height="16"/>
+    <object id="24" name="collidable" x="256" y="96" width="16" height="16"/>
+    <object id="25" name="collidable" x="352" y="96" width="16" height="16"/>
+    <object id="26" name="collidable" x="432" y="144" width="48" height="16"/>
+    <object id="27" name="collidable" x="96" y="288" width="16" height="16"/>
+    <object id="28" name="collidable" x="-16" y="480" width="512" height="16"/>
+    <object id="29" name="collidable" x="-16" y="-16" width="16" height="496"/>
+    <object id="30" name="collidable" x="480" y="-16" width="16" height="496"/>
+    <object id="31" name="collidable" x="-16" y="-16" width="512" height="16"/>
+  </objectgroup>
 </map>
